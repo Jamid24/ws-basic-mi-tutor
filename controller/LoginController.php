@@ -1,18 +1,16 @@
 <?php
-try {
-echo "Entro controller:" ;
+
 header('Content-type: application/json');
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 date_default_timezone_set('America/Bogota');
+
 include_once(realpath(dirname(__FILE__) . '/../model/classes/PersonEcci.php'));
-include_once(realpath(dirname(__FILE__) . '/../config/config.php'));
-echo "paso required:" ;
+
 $action=isset($_REQUEST['action'])?$_REQUEST['action']:0;
 $response;
 
-
-    echo "entro try";
+try {
     switch ($action) {
         case 1:
             $request_body = file_get_contents('php://input',1);
@@ -34,7 +32,6 @@ $response;
 
 function processLogin($request){
     try {
-        echo "paso login:";
         $response=[];
         $response['SERVER']=$_SERVER['SERVER_NAME'];
         $response['dbserver']=DB_SERVER;

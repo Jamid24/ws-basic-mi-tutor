@@ -1,5 +1,7 @@
 <?php
 
+include_once(realpath(dirname(__FILE__) . '/../config/config.php'));
+
 class Conection{
    
     private $servidor;
@@ -10,11 +12,11 @@ class Conection{
     private $conexion;
     
     function __construct() {
-        $this->servidor = '127.0.0.1';
-        $this->puerto='5432';
-        $this->baseDatos = 'mi_tutor';
-        $this->usuario = 'postgres';
-        $this->clave = '123456';
+        $this->servidor = DB_SERVER;
+        $this->puerto= DB_PORT;
+        $this->baseDatos = DB_NAME;
+        $this->usuario = DB_USER;
+        $this->clave = DB_PASSW;
     }
     
     public function getConexion(){
