@@ -5,6 +5,7 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 date_default_timezone_set('America/Bogota');
 
+include_once(realpath(dirname(__FILE__) . '/../config/config.php'));
 include_once(realpath(dirname(__FILE__) . '/../model/classes/PersonEcci.php'));
 
 $action=isset($_REQUEST['action'])?$_REQUEST['action']:0;
