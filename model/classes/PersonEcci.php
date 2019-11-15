@@ -1,6 +1,6 @@
 <?php
 
-require_once(realpath(dirname(__FILE__) . '/../Conection.php'));
+include_once(realpath(dirname(__FILE__) . '/../Conection.php'));
 
 class PersonEcci {
     private $conectDb;
