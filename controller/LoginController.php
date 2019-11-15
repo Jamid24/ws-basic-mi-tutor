@@ -6,6 +6,7 @@ header("Access-Control-Allow-Headers: *");
 date_default_timezone_set('America/Bogota');
 
 require_once(realpath(dirname(__FILE__) . '/../model/classes/PersonEcci.php'));
+require_once(realpath(dirname(__FILE__) . '/../config/config.php'));
 
 $action=isset($_REQUEST['action'])?$_REQUEST['action']:0;
 $response;
@@ -33,6 +34,8 @@ try {
 function processLogin($request){
     try {
         $response=[];
+        $response['SERVER']=$_SERVER['SERVER_NAME'];
+        $response['dbserver']=DB_SERVER;
         if(!isset($request->codePerson)){
             $response['status']=400;
             $response['message']="Datos no obtenidos.";
