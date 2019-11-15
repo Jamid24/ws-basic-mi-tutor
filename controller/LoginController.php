@@ -1,5 +1,5 @@
 <?php
-echo "Entro controller";
+echo "Entro controller:".realpath(dirname(__FILE__) ;
 header('Content-type: application/json');
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
