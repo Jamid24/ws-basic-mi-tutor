@@ -39,8 +39,11 @@ function processLogin($request){
             $response['status']=400;
             $response['message']="Datos no obtenidos.";
         }else{
+            $response['path']=$_SERVER['DOCUMENT_ROOT'];
             $person=new PersonEcci();
+            $response['pers']=$person;
             $data=$person->getPersonEcci($request->codePerson);
+            $response['persn']=$data;
             if(empty($data)){
                 $response['status']=400;
                 $response['message']="El estudiante o profesor no está registrado en la institución.";
