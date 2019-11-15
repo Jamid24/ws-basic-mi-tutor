@@ -1,13 +1,12 @@
 <?php
 try {
-echo "Entro controller:".realpath(dirname(__FILE__) . '/../model/classes/PersonEcci.php') ;
+echo "Entro controller:" ;
 header('Content-type: application/json');
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 date_default_timezone_set('America/Bogota');
-
-require_once(realpath(dirname(__FILE__) . '/../model/classes/PersonEcci.php'));
-require_once(realpath(dirname(__FILE__) . '/../config/config.php'));
+include_once(realpath(dirname(__FILE__) . '/../model/classes/PersonEcci.php'));
+include_once(realpath(dirname(__FILE__) . '/../config/config.php'));
 echo "paso required:" ;
 $action=isset($_REQUEST['action'])?$_REQUEST['action']:0;
 $response;
