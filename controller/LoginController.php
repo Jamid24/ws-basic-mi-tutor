@@ -7,11 +7,12 @@ date_default_timezone_set('America/Bogota');
 
 require_once(realpath(dirname(__FILE__) . '/../model/classes/PersonEcci.php'));
 require_once(realpath(dirname(__FILE__) . '/../config/config.php'));
-
+echo "paso required:" ;
 $action=isset($_REQUEST['action'])?$_REQUEST['action']:0;
 $response;
 
 try {
+    echo "entro try"
     switch ($action) {
         case 1:
             $request_body = file_get_contents('php://input',1);
@@ -33,6 +34,7 @@ try {
 
 function processLogin($request){
     try {
+        echo "paso login:"
         $response=[];
         $response['SERVER']=$_SERVER['SERVER_NAME'];
         $response['dbserver']=DB_SERVER;
