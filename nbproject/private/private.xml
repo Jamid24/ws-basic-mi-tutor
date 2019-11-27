@@ -4,7 +4,14 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/xampp/htdocs/ws-basic-mi-tutor/controller/LoginController.php</file>
-            <file>file:/C:/xampp/htdocs/ws-basic-mi-tutor/model/Classes/PersonEcci.php</file>
+            <file>file:/C:/xampp/htdocs/ws-basic-mi-tutor/model/classes/Matter.php</file>
+            <file>file:/C:/xampp/htdocs/ws-basic-mi-tutor/model/classes/Ubication.php</file>
+            <file>file:/C:/xampp/htdocs/ws-basic-mi-tutor/model/classes/User.php</file>
+            <file>file:/C:/xampp/htdocs/ws-basic-mi-tutor/model/classes/Tutorial.php</file>
+            <file>file:/C:/xampp/htdocs/ws-basic-mi-tutor/controller/TutorialController.php</file>
+            <file>file:/C:/xampp/htdocs/ws-basic-mi-tutor/model/classes/Headquarter.php</file>
+            <file>file:/C:/xampp/htdocs/ws-basic-mi-tutor/model/classes/Career.php</file>
+            <file>file:/C:/xampp/htdocs/ws-basic-mi-tutor/model/classes/PersonEcci.php</file>
         </group>
     </open-files>
 </project-private>

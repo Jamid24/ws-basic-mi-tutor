@@ -6,6 +6,9 @@ header("Access-Control-Allow-Headers: *");
 date_default_timezone_set('America/Bogota');
 
 include_once(realpath(dirname(__FILE__) . '/../model/classes/Matter.php'));
+include_once(realpath(dirname(__FILE__) . '/../model/classes/Headquarter.php'));
+include_once(realpath(dirname(__FILE__) . '/../model/classes/Ubication.php'));
+include_once(realpath(dirname(__FILE__) . '/../model/classes/Tutorial.php'));
 
 $action=isset($_REQUEST['action'])?$_REQUEST['action']:0;
 $response;
@@ -16,6 +19,24 @@ try {
             $request_body = file_get_contents('php://input',1);
             $dataRequest=isset($request_body)? json_decode($request_body):null;
             $response= getMattersXUser($dataRequest);
+            break;
+        
+        case 2:
+            $request_body = file_get_contents('php://input',1);
+            $dataRequest=isset($request_body)? json_decode($request_body):null;
+            $response= getHeadquarters($dataRequest);
+            break;
+          
+        case 3:
+            $request_body = file_get_contents('php://input',1);
+            $dataRequest=isset($request_body)? json_decode($request_body):null;
+            $response= getUbications($dataRequest);
+            break;
+        
+        case 4:
+            $request_body = file_get_contents('php://input',1);
+            $dataRequest=isset($request_body)? json_decode($request_body):null;
+            $response= createTutorial($dataRequest);
             break;
 
         default:
@@ -53,45 +74,73 @@ function getMattersXUser($request){
     } 
 }
 
-
-function getUserMiTutor($dataPerson, $passw, $idInstitution){
-    $response=[];
-    $response['status']=200;
-    
-    $userApp=new User();
-    $objUser=$userApp->getUserByCodePassw($dataPerson['code_ecci'], $passw);
-    if(!empty($objUser)){
-        if(!$objUser['is_active']){
-            $response['status']=400;
-            $response['message']='Usuario inactivo en la plataforma Mi Tutor.';
-        } else {
-            $response['data']=$objUser;   
-        }
-    }else{
-        if($userApp->getUserByCode($dataPerson['code_ecci'])){
-            $response['status']=400;
-            $response['message']='Password incorrecto.';
+function getHeadquarters($request){
+    try {
+        $response['status']=400;
+        if(!isset($request->datum) ){
+            $response['message']="Datos no obtenidos.";
         }else{
-            $userApp->idProfile=($dataPerson['code_type_person']=="STUD")?1:2;  
-            $userApp->names=$dataPerson['names'];  
-            $userApp->surnames=$dataPerson['surnames'];  
-            $userApp->idTypeIdentification=$dataPerson['id_type_identification'];  
-            $userApp->codeTypeIdentification =$dataPerson['code_type_identification'];  
-            $userApp->numberIdentification =$dataPerson['number_identification'];  
-            $userApp->codeTypePerson=$dataPerson['code_type_person'];  
-            $userApp->idInstitution=$idInstitution;  
-            $userApp->codeUserInstitution=$dataPerson['code_ecci'];  
-            $userApp->emailInstitucional=$dataPerson['email_institucional'];  
-            $userApp->password= md5($dataPerson['number_identification']);  
-
-            $result=$userApp->addUser();
-            $objCareer=new Career();
-            $career=$objCareer->getCareer($dataPerson['code_career']);
-            $objCareer->addCareerUser($result['id_user'], $career['id_career']);
-            
-            $response['data']=$userApp->getUserByCodePassw($userApp->codeUserInstitution, $userApp->numberIdentification);
+            $obj=new Headquarter();
+            $data=$obj->getHeadquartersXCity($request->datum);
+            if(empty($data)){
+                $response['message']="Sedes no encontradas.";
+            }else{
+                $response['status']=200;
+                $response['data']=$data;
+            }
         }
-    }
-    return $response;
-    
+        return $response;
+    } catch (Exception $exc) {
+        $response['status']=400;
+        $response['message']='Error inesperado al  momento validar el usuario.';
+        return $response;
+    } 
 }
+
+function getUbications($request){
+    try {
+        $response['status']=400;
+        if(!isset($request->datum) ){
+            $response['message']="Datos no obtenidos.";
+        }else{
+            $obj=new Ubication();
+            $data=$obj->getUbicationsXHeadquarter($request->datum);
+            if(empty($data)){
+                $response['message']="Sedes no encontradas.";
+            }else{
+                $response['status']=200;
+                $response['data']=$data;
+            }
+        }
+        return $response;
+    } catch (Exception $exc) {
+        $response['status']=400;
+        $response['message']='Error inesperado al  momento validar el usuario.';
+        return $response;
+    } 
+}
+
+function createTutorial($request){
+    try {
+        $response['status']=400;
+        if(!isset($request->idUser) ){
+            $response['message']="Datos no obtenidos.";
+        }else{
+            $obj=new Tutorial();
+            $data=$obj->createTutorial($request->idUser,$request->idMatter, $request->idUbication, $request->dateTutorial, $request->hourTutorial, $request->quota );
+            if(empty($data)){
+                $response['message']="No se pudo registrar la tutoria.";
+            }else{
+                $response['status']=200;
+                $response['message']="Tutoria creada.";
+                $response['data']=$data;
+            }
+        }
+        return $response;
+    } catch (Exception $exc) {
+        $response['status']=400;
+        $response['message']='Error inesperado al  momento crear la tutoria.';
+        return $response;
+    } 
+}
+
